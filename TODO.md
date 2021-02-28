@@ -8,7 +8,7 @@
 - [ ] When choosing the “output file”, the screen to choose the file pops up and has to be completed twice.
 - [ ] The MCR doesn’t support imported font that’s super- or subscripted (this is something we left off on a few weeks ago: we were in the process of creating a third sheet that allows for specified elements to be subscripted or superscripted as coded for).
 - [ ] Difficult to exit/escape while the code is running / in-progress (I’m not sure if that’s something which can be “fixed”, but thought I’d mention in case).
-- [ ] Currently only PC-compatible (I’m sure this is something you’re already working on with Alexa).
+- [ ] Currently only PC-compatible
 - [ ] All of the things where if you don’t have 2 rows or columsn is doesn’t work
 - [ ] The first column of the text_data doesn't do anything, so indicate that
 - [ ] validation
