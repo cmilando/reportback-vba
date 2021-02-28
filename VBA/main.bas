@@ -21,6 +21,8 @@ Sub find_and_replace()
     Application.ScreenUpdating = False
     UserForm1.HelpText.Caption = "Starting"
     
+    ' Adding text to see if pull works
+    
     ' ---------------------------------------------------------------------------------------------------------
     ' PART 0: CLEAR ERROR LOG, VALIDATION CHECKS
     ' ---------------------------------------------------------------------------------------------------------
