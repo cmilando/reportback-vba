@@ -1,15 +1,15 @@
-- [] make it so it doesn’t error if you don't select a file
-- [] make this sheet read only
-- [] make checks for that all the columns in data sheet are found in  the template
-- [] and that there are no misspellings
-- [] and that data columns are not discontinuous
-- [] and that everyone has requisite data 
-- [] probably best to output this in an errors. Txt file, or on the next sheet
-- [] When choosing the “output file”, the screen to choose the file pops up and has to be completed twice.
-- [] The MCR doesn’t support imported font that’s super- or subscripted (this is something we left off on a few weeks ago: we were in the process of creating a third sheet that allows for specified elements to be subscripted or superscripted as coded for).
-- [] Difficult to exit/escape while the code is running / in-progress (I’m not sure if that’s something which can be “fixed”, but thought I’d mention in case).
-- [] Currently only PC-compatible (I’m sure this is something you’re already working on with Alexa).
-- [] All of the things where if you don’t have 2 rows or columsn is doesn’t work
-- [] The first column of the text_data doesn't do anything, so indicate that
-- [] validation
-- [] make cancel function (Can press -esc to cancel)
+- [ ] make it so it doesn’t error if you don't select a file
+- [ ] make this sheet read only
+- [ ] make checks for that all the columns in data sheet are found in  the template
+- [ ] and that there are no misspellings
+- [ ] and that data columns are not discontinuous
+- [ ] and that everyone has requisite data 
+- [ ] probably best to output this in an errors. Txt file, or on the next sheet
+- [ ] When choosing the “output file”, the screen to choose the file pops up and has to be completed twice.
+- [ ] The MCR doesn’t support imported font that’s super- or subscripted (this is something we left off on a few weeks ago: we were in the process of creating a third sheet that allows for specified elements to be subscripted or superscripted as coded for).
+- [ ] Difficult to exit/escape while the code is running / in-progress (I’m not sure if that’s something which can be “fixed”, but thought I’d mention in case).
+- [ ] Currently only PC-compatible (I’m sure this is something you’re already working on with Alexa).
+- [ ] All of the things where if you don’t have 2 rows or columsn is doesn’t work
+- [ ] The first column of the text_data doesn't do anything, so indicate that
+- [ ] validation
+- [ ] make cancel function (Can press -esc to cancel)
