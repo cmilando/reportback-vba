@@ -1,5 +1,7 @@
 Attribute VB_Name = "main"
+'@Folder "VBAProject"
 Option Explicit
+Public stopit As Boolean
 Sub main()
 
     UserForm1.Show
@@ -15,17 +17,62 @@ Sub progress(pctCompl As Single)
 
 End Sub
 
+Sub validation()
+
+    ' Validation
+
+
+End Sub
+
+
 Sub find_and_replace()
     
+    ' never add to more than 3 parameters to a method
+    ' never indent more than 3 times in a method
+    ' try and keep a single function under 100 lines --> single responsiblity principle
+    ' readme data function that gives back data
+    ' make functions for each of the sub-routines
+    ' can i define classes
+    ' >> load data, and give you back a class that represented
+    ' >> can i define a class for a person? that I can pass around
+    ' >> can I define class methods for each person
+    ' >> make a class for slides, persons,
+    ' >> public class my powerpoint
+    ' >> on it i can put public properties
+    
+    ' put this above the sub find and replace
+    ' Public Class Customer
+    '   Public Property AccountNumber As Integer
+    ' End Class
+    ' collection object?
+    ' pull the data this easily accessible
+    
+    ' complexity is unavoidable
+    ' manage the over-head
+    
+    ' should be able to do dictionaries
+    ' should be able to do classes
+    ' should be able to make a good state thing
+    ' this class structure
+    ' put the class structure as a field on the class
+    ' the fill thing returns true or false
+    ' all have different loggers that do the same thing
+    ' this is why its good to have a logging classes
+    ' STATIC logger is the same no matter what person you use
+    ' it can be a field of the class so
+
+    
     'need to add the powerpoint library to tools > references
+    stopit = False
     Application.ScreenUpdating = False
     UserForm1.HelpText.Caption = "Starting"
-    
-    ' Adding text to see if pull works
     
     ' ---------------------------------------------------------------------------------------------------------
     ' PART 0: CLEAR ERROR LOG, VALIDATION CHECKS
     ' ---------------------------------------------------------------------------------------------------------
+    
+    ' Validation
+    Call validation
     
     ' Clear the error log page, and set up the logger
     Dim logger() As Variant                     ' re-dimable logger
@@ -35,6 +82,7 @@ Sub find_and_replace()
     logger_i = 1
     logprint_i = 1
     Sheets("ErrorLog").Cells.Clear
+
     
     ' ---------------------------------------------------------------------------------------------------------
     ' PART 1A: READ IN VARIABLES FROM TEXT DATA
@@ -67,6 +115,13 @@ Sub find_and_replace()
     For var_i = 1 To n_vars
         vars_to_find(var_i) = ws.Range("A1").Offset(0, var_i).Value
         For pp_i = 1 To n_pp
+            
+            DoEvents
+            If stopit = True Then
+                UserForm1.HelpText.Caption = "execution stopped. press 'x' to close"
+                Exit Sub
+            End If
+                
             If var_i = 1 Then
                 pp_ids(pp_i) = ws.Range("A1").Offset(pp_i, 0).Value
             End If
@@ -95,6 +150,13 @@ Sub find_and_replace()
     Application.Wait (Now + TimeValue("0:00:01"))
     
     For image_i = 1 To n_images_total
+    
+        DoEvents
+        If stopit = True Then
+            UserForm1.HelpText.Caption = "execution stopped. press 'x' to close"
+            Exit Sub
+        End If
+    
         For image_var_i = 0 To 6
             image_db(image_i, image_var_i + 1) = ws.Range("A1").Offset(image_i, image_var_i).Value
         Next image_var_i
@@ -199,6 +261,7 @@ Sub find_and_replace()
         fullName = sfolder & sFile & " " & Format(Now, "yyyy-mm-dd hh-mm-ss")
 
         For slide_i = 1 To nSlides
+        
             UserForm1.HelpText.Caption = "Person: " & pp_ids(pp_i) & ". Find and replace on Slide: " & slide_i
             Set sld = myPresentation.Slides(slide_i)
             
@@ -209,7 +272,13 @@ Sub find_and_replace()
                 ' For replacing text data
                 If shp.HasTextFrame Then
                     If shp.TextFrame.HasText Then
-                    
+                        
+                        DoEvents
+                        If stopit = True Then
+                            UserForm1.HelpText.Caption = "execution stopped. press 'x' to close"
+                            Exit Sub
+                        End If
+                        
                         ' For replacing text data, from key codes
                         For var_i = 1 To n_vars
                         
@@ -225,6 +294,13 @@ Sub find_and_replace()
                                 textLoc.Text = replace_val
                                 Set textLoc = shp.TextFrame.TextRange.Find(search_text)
                             Wend
+                            
+                            ' give the function, the list of variables and the shape
+                            ' doesnt return the shape, returns nothing,
+                            ' as long as this doesnt pass by copy
+                            ' so since its object oriented, we can assume this just passes a pointer
+                            ' can i pull out a object with all the data
+                            
                             
                         Next var_i
                         
@@ -288,7 +364,15 @@ Sub find_and_replace()
                 
              '
                 'replacing data in tables
+                ' <<< need to make sure ther are no formatting characters in tables
                 If shp.HasTable Then
+                    
+                    DoEvents
+                    If stopit = True Then
+                        UserForm1.HelpText.Caption = "execution stopped. press 'x' to close"
+                        Exit Sub
+                    End If
+                    
                     For table_i = 1 To shp.Table.Rows.Count
                         For table_j = 1 To shp.Table.Columns.Count
                             Set tablecell = shp.Table.Rows.Item(table_i).Cells(table_j).Shape.TextFrame
@@ -316,6 +400,12 @@ Sub find_and_replace()
             Do While image_i <= n_images_total And loop_exit = False
                 
                 If image_db(image_i, 1) = sFile And image_db(image_i, 2) = slide_i Then
+                    
+                    DoEvents
+                    If stopit = True Then
+                        UserForm1.HelpText.Caption = "execution stopped. press 'x' to close"
+                        Exit Sub
+                    End If
                                     
                     ppi = 72
                     dpi = 96
@@ -370,10 +460,10 @@ Sub find_and_replace()
         MsgBox ("CHECK ERROR LOG")
         
     End If
-        
-    
+            
     ' PowerPointApp.Quit
     Application.ScreenUpdating = True
     UserForm1.HelpText.Caption = "Finished"
     
 End Sub
+

@@ -16,3 +16,6 @@ How to use this repo
 
 If you want to manually update your version or submit pull requests:
 * Rubberduck[https://rubberduckvba.com/] for VBA source control make this very easy
+
+### how to import new code using RubberDuck
+In the RubberDuck code explorer, right click the whole mcr file (*.xlsm) and select export/import project

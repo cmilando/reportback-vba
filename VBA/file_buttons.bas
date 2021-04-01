@@ -1,5 +1,7 @@
 Attribute VB_Name = "file_buttons"
 Sub FileOpen_ppt()
+' This function opens up the powerpoint template
+
  
 'Display a Dialog Box that allows to select a single file.
 'The path for the file picked will be stored in fullpath variable
@@ -24,7 +26,6 @@ Sub SaveAs_ppt()
     Range("ppt_template").Select
     fullpath = ActiveCell.Value
 
-    
     Dim PowerPointApp As PowerPoint.Application
     Set PowerPointApp = CreateObject("PowerPoint.Application")
     
@@ -67,7 +68,7 @@ Sub set_dest_folder()
         'Makes sure the user can select only one file
         .AllowMultiSelect = False
         'Show the dialog box
-        .Show
+        '.Show
         
         'Store in fullpath variable
         dest_folder = .SelectedItems.Item(1)
