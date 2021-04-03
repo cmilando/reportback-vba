@@ -16,11 +16,11 @@
 
 ####Other:
 
-- [ ] Standardize code
+- [ ] Make code into classes (as per DER convo)
 - [ ] Generalize super/subscript
 - [ ] make this sheet read only
 - [ ] All of the things where if you don’t have 2 rows or columns is doesn’t work
-- [ ] The first column of the text_data doesn't do anything, so indicate that
+- [ ] The first column of the text_data doesn't do anything, so indicate that. well it does set the file name right?
 
 ### Not MVP
 

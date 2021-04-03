@@ -18,13 +18,13 @@ Sub FileOpen_ppt()
     End With
     
     Range("ppt_template").Select
-    ActiveCell.Value = fullpath
+    ActiveCell.value = fullpath
  
 End Sub
 Sub SaveAs_ppt()
      
     Range("ppt_template").Select
-    fullpath = ActiveCell.Value
+    fullpath = ActiveCell.value
 
     Dim PowerPointApp As PowerPoint.Application
     Set PowerPointApp = CreateObject("PowerPoint.Application")
@@ -53,7 +53,7 @@ Sub FileOpen_exceldata()
     End With
     
     Range("excel_data").Select
-    ActiveCell.Value = fullpath
+    ActiveCell.value = fullpath
  
 End Sub
 
@@ -75,6 +75,6 @@ Sub set_dest_folder()
     End With
     
     Range("dest_folder").Select
-    ActiveCell.Value = dest_folder
+    ActiveCell.value = dest_folder
 
 End Sub
