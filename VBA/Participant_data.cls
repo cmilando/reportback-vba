@@ -44,12 +44,9 @@ Private image_coll As New Collection '
 
 Private use_formatting As Boolean    '
 Private n_fmt_unique As Integer      '
-Private fmt_db() As Variant          '
-Private fmt_unique() As Variant      '
+Private fmt_coll As New Collection   '
 
-Private Logger() As Variant          ' re-dimable logger
-Private logger_i As Integer          ' iterate through logger
-Private logprint_i As Integer        ' iterate through logger
+Private Logger As New Collection     '
 
 ' ! ===========================================================================
 ' Sub: Class_Initialize()
@@ -66,14 +63,10 @@ Private logprint_i As Integer        ' iterate through logger
 Private Sub Class_Initialize()
    
     Set wb = GetObject(Range("excel_data").value)
-        
-    ' Clear the error log page, and set up the logger
-    Const logger_size As Integer = 1000 ' Logger size
-    ReDim Logger(logger_size)
-    logger_i = 1
-    logprint_i = 1
+
     Call SheetExists(ActiveWorkbook, "ErrorLog")
     Sheets("ErrorLog").Cells.Clear
+    Set Logger = New Collection
     
 End Sub
 ' ! ===========================================================================
@@ -117,12 +110,15 @@ Public Sub fill_vars()
     'fill pp_ids, var_data and vars_to_find
     n_pp = 0
     n_vars = 0
+    
     Do While ws.Range("A2").Offset(n_pp, 0).value <> ""
         n_pp = n_pp + 1
     Loop
+    
     Do While ws.Range("B1").Offset(0, n_vars).value <> ""
         n_vars = n_vars + 1
     Loop
+    
     If n_pp = 0 Or n_vars = 0 Then
         MsgBox "ERROR: Blank initial row or column on sheet 'text_data'"
         End
@@ -165,11 +161,10 @@ Public Sub fill_vars()
             
             ' Value validation
             If value_in_set(tmp, Array("", "NA", "<NA>")) Then
-                Logger(logger_i) = "Check value of Person: " & pp_ids(pp_i) & _
+                Logger.Add "Check value of Person: " & pp_ids(pp_i) & _
                                    " and Var: " & var_names(var_i) & ". " & _
                                    "Recorded value is in c('', 'NA', '<NA>')."
-                                   
-                logger_i = logger_i + 1
+
             End If
             
             pp_data(pp_i, var_i) = tmp
@@ -298,7 +293,7 @@ Public Sub fill_image_data()
             image_coll.Add sub_image_coll, key
             
         Else
-        
+         
             image_coll(key).Add image
         
         End If
@@ -331,6 +326,8 @@ End Property
 ' - is there actually a sheet called formatting
 ' - does it start on A1
 ' - are the formatting instructions valid (eg in a list of approved answers)
+' Check that the n chars is good
+' check that the value given can actually be in (is in the set)
 Public Sub fill_formatting_chars()
     
     ' Check to make sure that various sheets exist if used
@@ -339,48 +336,65 @@ Public Sub fill_formatting_chars()
     Set ws = wb.Worksheets("formatting")
     
     Dim n_fmt_total As Integer      '
+    Dim n_fmt_cols As Integer
+    Dim sub_fmt_coll As New Collection
+    Dim fmt As New Formatting_data
     Dim fmt_i As Integer            '
-    Dim fmt_var_i As Integer        '
     Dim unique_i As Integer         '
+    Dim str_txt As Variant
+    Dim str_type As Variant
+    Dim start As Variant
+    Dim length As Variant
+    Dim key As String
     
-    n_fmt_total = ws.Range("A2").End(xlDown).Row - 1
-    ReDim fmt_unique(n_fmt_total, 3) 'fmt, start, stop
-    ReDim fmt_db(n_fmt_total, 4) 'text, type, start ,len
-
-    n_fmt_unique = 0
-    unique_i = 1
+    ' different people might have different number of files
+    n_fmt_total = 0
+    n_fmt_cols = 0
     
+    Do While ws.Range("A2").Offset(n_fmt_total, 0).value <> ""
+        n_fmt_total = n_fmt_total + 1
+    Loop
+    
+    Do While ws.Range("A1").Offset(0, n_fmt_cols).value <> ""
+        n_fmt_cols = n_fmt_cols + 1
+    Loop
+    
+    If n_fmt_total = 0 Or n_fmt_cols <> 4 Then
+        MsgBox "ERROR: Blank initial row or necessary column on 'formatting'"
+        End
+    End If
+   
     For fmt_i = 1 To n_fmt_total
         
         Call check_cancel
         
-        For fmt_var_i = 0 To 3
-            fmt_db(fmt_i, fmt_var_i + 1) = _
-                            ws.Range("A1").Offset(fmt_i, fmt_var_i).value
-        Next fmt_var_i
+        ' Create a new image object
+        str_txt = ws.Range("A1").Offset(fmt_i, 0).value
+        str_type = ws.Range("A1").Offset(fmt_i, 1).value
+        start = ws.Range("A1").Offset(fmt_i, 2).value
+        length = ws.Range("A1").Offset(fmt_i, 3).value
+
+        Set fmt = New Formatting_data
+        Call fmt.set_values(fmt_i, str_txt, str_type, start, length)
         
-        If fmt_i = 1 Then
-            n_fmt_unique = 1
-            fmt_unique(n_fmt_unique, 1) = fmt_db(fmt_i, 1) 'name
-            fmt_unique(n_fmt_unique, 2) = fmt_i
+        ' Insert it into the collection
+        key = str_txt
+        If Not Exists(fmt_coll, key) Then
+        
+            Set sub_fmt_coll = New Collection
+            
+            sub_fmt_coll.Add fmt
+            
+            fmt_coll.Add sub_fmt_coll, key
             
         Else
-            If fmt_db(fmt_i, 1) <> fmt_db(fmt_i - 1, 1) Then
-                fmt_unique(n_fmt_unique, 3) = fmt_i - 1
-                n_fmt_unique = n_fmt_unique + 1
-                fmt_unique(n_fmt_unique, 1) = fmt_db(fmt_i, 1)
-                fmt_unique(n_fmt_unique, 2) = fmt_i
-            End If
+         
+            fmt_coll(key).Add fmt
+        
         End If
-        
-        ' Validation
-        ' Check that the n chars is good
-        ' check that the value given can actually be in (is in the set)
-        
+
     Next fmt_i
-    
-    fmt_unique(n_fmt_unique, 3) = fmt_i - 1
-    
+        
     'helpful message boxes before moving on
     Progress_bar.HelpText.Caption = "Total # of formatting = " & n_fmt_total
     Application.Wait (Now + TimeValue("0:00:01"))
@@ -390,24 +404,22 @@ End Sub
 
 ' -------------------------------------------
 ' get formatted character data
-Property Get fmt_u() As Variant
-    fmt_u = fmt_unique
-End Property
-
-Property Get fmt_data() As Variant
-    fmt_data = fmt_db
+Property Get fmt_data() As Collection
+    Set fmt_data = fmt_coll
 End Property
 
 Property Get n_fmt() As Variant
-    n_fmt = n_fmt_unique
+    n_fmt = fmt_coll.Count
 End Property
 
 ' ! ===========================================================================
 Sub print_logger()
+    
+    Dim logprint_i As Integer        ' iterate through logger
 
-    If logger_i > 1 Then
+    If Logger.Count >= 1 Then
         
-        For logprint_i = 1 To (logger_i - 1)
+        For logprint_i = 1 To Logger.Count
             
             Sheets("ErrorLog").Cells(1 + logprint_i, 2).value = Logger(logprint_i)
             

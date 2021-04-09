@@ -213,17 +213,23 @@ Sub replace_formatting_placeholders(obj As Object, _
     Dim len_fmt As Integer
     Dim pos_mod As Integer
     Dim type_fmt As String
-    Dim fmt_unique_i As Integer
-    Dim fmt_i As Integer
     
-    For fmt_unique_i = 1 To p_data.n_fmt
-                            
-        search_text = left_ & p_data.fmt_u(fmt_unique_i, 1) & right_
+    Dim fmt_head As New Formatting_data
+    Dim fmt_unique As Variant
+    Dim fmt_sub As Variant
+    Dim o As Object
+    
+    For Each fmt_unique In p_data.fmt_data
+        
+        'first element
+        Set fmt_head = fmt_unique(1)
+        
+        search_text = left_ & fmt_head.str_txt & right_
         Set textLoc = obj.TextRange.Find(search_text)
         
         Progress_bar.HelpText.Caption = "Person: " & p_id & _
-                ". Find and replace on Slide: " & slide_i & _
-                "; format text = " & search_text
+        ". Find and replace on Slide: " & slide_i & _
+        "; format text = " & search_text
         
         pos_mod = 1
         
@@ -235,27 +241,18 @@ Sub replace_formatting_placeholders(obj As Object, _
             ' so if you've found this text string still, that means it hasn't been touched at all
             ' so go through each of the fmt steps for this and fix it, then unbracket and move on
             
-            For fmt_i = p_data.fmt_u(fmt_unique_i, 2) To p_data.fmt_u(fmt_unique_i, 3)
+            For Each fmt_sub In fmt_unique
                 
-                start_fmt = pos + p_data.fmt_data(fmt_i, 3)
-                type_fmt = p_data.fmt_data(fmt_i, 2)
-                len_fmt = p_data.fmt_data(fmt_i, 4)
+                start_fmt = pos + fmt_sub.start
+                type_fmt = fmt_sub.str_type
+                len_fmt = fmt_sub.length
                 
-                ' superscript
-                If type_fmt = "superscript" Then
-                     obj.TextRange.Characters(start_fmt, len_fmt).Font.Superscript = True
-                End If
-                
-                ' subscript
-                If type_fmt = "subscript" Then
-                     obj.TextRange.Characters(start_fmt, len_fmt).Font.Subscript = True
-                End If
-                
-                ' <<<<<<< FUTURE FIX
-                ' this makes it so we don't have to say type_fmt == "superscript"
-                'CallByName(obj.TextRange, "Characters(start_fmt, len_fmt).Font.Superscript", VbGet) = True
-                                           
-            Next fmt_i
+                Set o = obj.TextRange.Characters(start_fmt, len_fmt)
+                With o
+                    CallByName o.Font, type_fmt, VbLet, True
+                End With
+                                              
+            Next
             
             ' So at this point, this specific instance is totally fixed
             Set leftLoc = obj.TextRange.Find(left_, pos - 1)
@@ -267,8 +264,7 @@ Sub replace_formatting_placeholders(obj As Object, _
         
         Wend
         
-    Next fmt_unique_i
-
+    Next
 
 End Sub
 
