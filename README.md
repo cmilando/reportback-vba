@@ -1,6 +1,6 @@
 # MCR: Macro for Compilation of Report-backs (MCR)
 
-This repository contains the code for the Macro for Compilation of Report-backs (MCR). 
+This repository contains the code for the Macro for Compilation of Report-backs (MCR), an open-source, generalizable tool designed to provide researchers in health studies with a flexible and scalable method for compiling individual reports.
 
 See 'How to use MCR' in the [**Wiki**](https://github.com/cmilando/reportback-vba/wiki#toc)
 
