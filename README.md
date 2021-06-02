@@ -12,7 +12,9 @@ This software is covered under Creative Commons License XYZ
 ### Using MCR
 * Download the most recent version of MCR in [**Releases**](https://github.com/cmilando/reportback-vba/releases) 
 * Read 'How to use MCR' in the [**Wiki**](https://github.com/cmilando/reportback-vba/wiki#toc)
-* **CRITICAL** In Excel, enable the following: Developer | VB | Tools | References | Microsoft Powerpoint 16.0 Object Library
+```diff
+- *MUST DO THIS*: In Excel, enable the Microsoft Powerpoint 16.0 Object Library:
+```
 ![image](https://drive.google.com/uc?export=view&id=1MhlvMggpeM0wrWFWt1hopUZUlYUOmySo)
 
 ### Contributing code to MCR
