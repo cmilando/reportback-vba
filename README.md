@@ -13,6 +13,7 @@ This software is covered under Creative Commons License XYZ
 
 How to use this repository
 * Download the most recent version of MCR in [**Releases**](https://github.com/cmilando/reportback-vba/releases) 
+* In Excel, enable the following: Developer | VB | Tools | References | Microsoft Powerpoint 16.0 Object Library
 
 ### Contributing code
 If you want to manually update your version or submit pull requests:
