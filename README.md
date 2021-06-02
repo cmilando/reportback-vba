@@ -16,6 +16,6 @@ How to use this repository
 
 ### Contributing code
 If you want to manually update your version or submit pull requests:
-* [**Rubberduck**](https://rubberduckvba.com/) for VBA source control make this very easy
+* [**Rubberduck**](https://rubberduckvba.com/) for VBA source control. 
 
-In the RubberDuck code explorer, right click the whole mcr file (*.xlsm) and select export/import project
+In the RubberDuck code explorer, right click the whole mcr file (.xlsm) and select export/import project to your GitHub clone.
