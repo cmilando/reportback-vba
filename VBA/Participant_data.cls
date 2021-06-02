@@ -61,7 +61,7 @@ Private Logger As New Collection     '
 '   if they dont want to print data, then they have to just make a dummy
 '   column on text data that doesn't show up anywhere in the ppt
 Private Sub Class_Initialize()
-   
+        
     Set wb = GetObject(Range("excel_data").value)
 
     Call SheetExists(ActiveWorkbook, "ErrorLog")

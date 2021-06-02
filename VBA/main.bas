@@ -10,12 +10,12 @@ Sub find_and_replace()
     stopit = False
     Application.ScreenUpdating = False
     Progress_bar.HelpText.Caption = "Starting"
-       
+           
     ' -------------------------------------------------------------------------
     ' PART 1: READ IN PARTICIPANT DATA
     ' -------------------------------------------------------------------------
     Progress_bar.HelpText.Caption = "Open excel data workbook"
-    
+       
     Dim p_data As New Participant_data
         
     Call p_data.fill_vars
@@ -129,6 +129,46 @@ End Sub
 
 ' ! ===========================================================================
 Sub main()
+    
+    Call RangeExists("Run", "template", "D15")
+    Call RangeExists("Run", "left_char", "C18")
+    Call RangeExists("Run", "right_char", "C19")
+    
+    Call validate_option("left_char", Array("{", "{#"))
+    Call validate_option("right_char", Array("}", "#}"))
+    
+    Call RangeExists("Run", "excel_data", "D27")
+    Call RangeExists("Run", "use_image_data", "C32")
+    Call RangeExists("Run", "use_formatting_data", "C33")
+    
+    Call validate_option("use_image_data", Array("yes", "no"))
+    Call validate_option("use_formatting_data", Array("yes", "no"))
+    
+    Call RangeExists("Run", "dest_folder", "D37")
+    Call RangeExists("Run", "output_as", "C40")
+    Call RangeExists("Run", "output_suffix", "C41")
+    
+    Call validate_option("output_as", Array("ppt", "pdf"))
+    Call validate_option("output_suffix", Array("date", "none"))
+    
+    ' Check that data, ppt and out folder are defined and exist
+    If Not IsFile(Range("template").value) Then
+        MsgBox "ERROR: template file does not exist! Path: " & _
+                Range("template").value
+        End
+    End If
+    
+    If Not IsFile(Range("excel_data").value) Then
+        MsgBox "ERROR: Excel data file does not exist! Path: " & _
+                Range("excel_data").value
+        End
+    End If
+    
+    If Not IsFolder(Range("dest_folder").value) Then
+        MsgBox "ERROR: output folder does not exist! Path: " & _
+                Range("dest_folder").value
+        End
+    End If
     
     progress 0
     Progress_bar.Show
@@ -443,4 +483,17 @@ Function Exists(coll As Collection, key As String) As Boolean
     
     Exists = True
 EH:
+End Function
+' ! ===========================================================================
+Function IsFile(ByVal fName As String) As Boolean
+'Returns TRUE if the provided name points to an existing file.
+'Returns FALSE if not existing, or if it's a folder
+    On Error Resume Next
+    IsFile = ((GetAttr(fName) And vbDirectory) <> vbDirectory)
+End Function
+
+Function IsFolder(ByVal fName As String) As Boolean
+'Returns TRUE if the provided name points to an existing file or folder
+    On Error Resume Next
+    IsFolder = ((GetAttr(fName) And vbDirectory))
 End Function
