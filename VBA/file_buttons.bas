@@ -1,4 +1,12 @@
 Attribute VB_Name = "file_buttons"
+'---------------------------------------------------------------------------------------
+' Author    : Chad Milando
+' Copyright : Copyright 2020, 2021, Trustees of Boston University.
+'             All rights reserved.
+' License   : This software is provided under the terms of the
+'             SOFTWARE EVALUATION LICENSE AGREEMENT as detailed in
+'             the "license.txt" file in source directory.
+'---------------------------------------------------------------------------------------
 Option Explicit
 '! ============================================================================
 Sub RangeExists(WhatSheet As String, WhatRange As String, WhatCell As String)
