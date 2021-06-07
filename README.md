@@ -7,7 +7,7 @@ If you would like to use MCR in your projects, please cite:
 
 If you are interesting in collaborating on using MCR in your projects, please contact me at cmilando@bu.edu.
 
-This software is covered under Creative Commons License XYZ
+This software is covered under a SOFTWARE EVALUATION LICENSE AGREEMENT by BOSTON UNIVERSITY.
 
 ### Using MCR
 * Download the most recent version of MCR in [**Releases**](https://github.com/cmilando/reportback-vba/releases) 
