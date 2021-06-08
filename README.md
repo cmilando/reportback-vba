@@ -16,6 +16,8 @@ This software is covered under a SOFTWARE EVALUATION LICENSE AGREEMENT by BOSTON
 - *MUST DO THIS*: In Excel, enable the Microsoft Powerpoint 16.0 Object Library:
 ```
 ![image](https://drive.google.com/uc?export=view&id=1MhlvMggpeM0wrWFWt1hopUZUlYUOmySo)
+(If the image above does not load, refresh this page)
+
 
 ### Contributing code to MCR
 If you want to manually update your version or submit pull requests:
