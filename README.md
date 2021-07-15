@@ -2,10 +2,10 @@
 
 This repository contains the code for the Macro for Compilation of Report-backs (MCR), an open-source, generalizable tool designed to provide researchers in health studies with a flexible and scalable method for compiling individual reports.
 
-If you would like to use MCR in your projects, please cite:
+If you use MCR in your projects, please cite:
 * Polka E, Childs E, Friedman A, Tomsho KS, Claus Henn B, Scammell MK, Milando CW. MCR: Open-Source Software to Automate Compilation of Health Study Report-Back. International Journal of Environmental Research and Public Health. 2021; 18(11):6104. https://doi.org/10.3390/ijerph18116104
 
-If you are interesting in collaborating on using MCR in your projects, please contact me at cmilando@bu.edu.
+If you are interested in collaborating on using MCR in your projects, please contact me at cmilando@bu.edu.
 
 This software is covered under a [**Software Evaluation Licensing Agreement**](https://github.com/cmilando/reportback-vba/blob/main/LICENSE) by Boston University.
 
