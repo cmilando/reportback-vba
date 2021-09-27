@@ -472,7 +472,7 @@ Sub export_to_file(p_data As Participant_data, _
     ' export as pdf
     If output_type = "pdf" Then
         myPresentation.ExportAsFixedFormat fullName & ".pdf", _
-                  ppFixedFormatTypePDF, ppFixedFormatIntentScreen
+                  ppFixedFormatTypePDF, ppFixedFormatIntentPrint, , , , , , , , True
     End If
     
     ' export as powerpoint
