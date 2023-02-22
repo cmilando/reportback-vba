@@ -10,6 +10,7 @@ If you are interested in collaborating on using MCR in your projects, please con
 This software is covered under a [**Software Evaluation Licensing Agreement**](https://github.com/cmilando/reportback-vba/blob/main/LICENSE) by Boston University.
 
 ### Using MCR
+* Current version only works on PC, not MAC
 * Download the most recent version of MCR in [**Releases**](https://github.com/cmilando/reportback-vba/releases) 
 * Read 'How to use MCR' in the [**Wiki**](https://github.com/cmilando/reportback-vba/wiki#toc)
 ```diff
